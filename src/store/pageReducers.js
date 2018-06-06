@@ -1,5 +1,5 @@
-import example from '../views/Examples/flow/reducer';
+import RolesManagementReducer from '../views/RolesManagement/flow/reducer';
 
-export default {
-  example,
+export default { 
+  RolesManagementReducer,
 };

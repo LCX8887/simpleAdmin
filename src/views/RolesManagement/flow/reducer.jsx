@@ -5,15 +5,8 @@ import {
 } from './actionTypes';
 
 const roleID = 0;
-const initailState = {
-    rolesDetails:[],
-    departments:['Warehoues','Back Office','Operation'],
-    permissions:[{'permissionClass':'Administration','permissionName':['Administration','Roles','Add Users']},
-                {'permissionClass':'Client','permissionName':['Client','Accounts','Sub Accounts','Leads']},
-                {'permissionClass':'Task','permissionName':['Task','Affiliate','Document']},
-                {'permissionClass':'Affiliate Setting','permissionName':['Affiliate Setting']},
-                {'permissionClass':'Treasury','permissionName':['Treasury','Marketing Material','Freight Setting']}],
-    operations:['Add','Delete','Edit','View'],
+const initialState = {
+    rolesDetails:[],  
 }
 const addRolesDetails = (rolesDetails,newRole) => {
 

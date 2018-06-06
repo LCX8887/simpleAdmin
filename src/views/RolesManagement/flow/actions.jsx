@@ -4,17 +4,17 @@ import {
     DELETE_ROLES_DETAILS,
 } from './actionTypes';
 
-export const addRolesDetails = (text) => {
+export const addRolesDetails = (obj) => {
     return {
         type:ADD_ROLES_DETAILS,
-        payload:text,
+        payload:obj,
     }
 };
-export const editRolesDetails = (id,text) => {
+export const editRolesDetails = (id,obj) => {
     return {
         type:EDIT_ROLES_DETAILS,
         roleID:id,
-        payload:text,
+        payload:obj,
     }
 };
 export const deleteRolesDetails = (id) => {

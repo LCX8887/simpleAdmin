@@ -1,5 +1,5 @@
-import Example from './Examples/index';
+import RolesManagement from './RolesManagement/index';
 
 export {
-  Example,
+  RolesManagement,
 };
