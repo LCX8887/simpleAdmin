@@ -4,12 +4,14 @@ import {
     DELETE_ROLES_DETAILS,
 } from './actionTypes';
 
-const roleID = 0;
+var roleID = 1;
 const initialState = {
     rolesDetails:[],  
 }
 const addRolesDetails = (rolesDetails,newRole) => {
-
+    newRole['roleID'] = roleID++;
+    rolesDetails.push(newRole);
+    return rolesDetails;
 };
 const editRolesDetails = (rolesDetails,id,newRole) => {
 
@@ -20,10 +22,10 @@ const deleteRolesDetails = (rolesDetails,id) => {
 const RolesManagementReducer = (state=initialState, action) => {
     switch(action.type){
         case ADD_ROLES_DETAILS:
-            return {
-                ...state,
-                rolesDetails: addRolesDetails(state.rolesDetails,action.payload),
-            }
+            return Object.assign({}
+                ,state,
+                {rolesDetails: addRolesDetails(state.rolesDetails.concat(),action.payload)}
+            )
         case EDIT_ROLES_DETAILS:
             return {
                 ...state,

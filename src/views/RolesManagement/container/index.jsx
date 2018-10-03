@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addRolesDetails,editRolesDetails,deleteRolesDetails } from '../flow/actions';
+import AddRoles from '../components/AddRoles';
+import RolesDetails from '../components/RolesDetails';
 
 class RolesManagement extends Component {
     constructor(props) {
@@ -16,6 +18,8 @@ class RolesManagement extends Component {
             authority:[],
             department:'Warehoues',
             role:'',
+            rolesDetailsHead:['NO.','Department','Role','Permission','Action'],
+            rolesDetailsAction:['Edit','Delete'],
 
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -33,11 +37,15 @@ class RolesManagement extends Component {
         return arr;
     }
     
-    handleSubmit = (e) => addRolesDetails({ 
-            authority:this.state.authority,
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const { dispatch } = this.props;
+        dispatch(addRolesDetails({ 
+            authority:this.state.authority.slice(0),
             department:this.state.department,
             role:this.state.role,
-        });
+        }));
+    }       
     
     handleInputChange = (e) => {
        
@@ -66,35 +74,24 @@ class RolesManagement extends Component {
     
     render() {
         const { rolesDetails } = this.props;
-        const { departments,permissions,operations } = this.state;
+        const { departments,permissions,operations,rolesDetailsHead,rolesDetailsAction } = this.state;
         const handleInputChange = this.handleInputChange;
         const handleSubmit = this.handleSubmit;
 
         return (
             <div>
-                <form onSubmit={handleSubmit}> 
-                    <p>Department</p>
-                    <select name='department' onChange={handleInputChange}>
-                        {departments.map(department => <option value={department}>{department}</option>)}
-                    </select>
-                    <p>Role</p>
-                    <input type="text" name="role" onChange={handleInputChange}/>
-                    <p>Permission</p>
-                    {permissions.map(permission => {
-                        return (
-                            <div>{permission.permissionName.map(item => {
-                                return (
-                                    <div>
-                                        <p>{item}</p>
-                                        {operations.map(operation => <p><input type='checkbox' name='authority' value={item+'_'+operation} onChange={handleInputChange} />{operation}</p>)}
-                                    </div>
-                                )
-                            })}</div>
-                        )
-                    
-                    })}
-                    <input type='submit' value='Save'/>
-                </form>
+                <AddRoles 
+                    handleSubmit={handleSubmit}
+                    handleInputChange={handleInputChange}
+                    departments={departments}
+                    permissions={permissions}
+                    operations={operations}
+                />
+                <RolesDetails 
+                    rolesDetails={rolesDetails}
+                    rolesDetailsHead={rolesDetailsHead}
+                    rolesDetailsAction={rolesDetailsAction}
+                />
             </div>
         );
     }
@@ -103,12 +100,7 @@ class RolesManagement extends Component {
 const mapStateToProps = state => ({
     rolesDetails:state.RolesManagementReducer.rolesDetails,
 });
-const mapDispatchToProps = {
-    addRolesDetails,
-    editRolesDetails,
-    deleteRolesDetails,
-};
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(RolesManagement);
