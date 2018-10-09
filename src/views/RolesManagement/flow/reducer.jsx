@@ -14,10 +14,21 @@ const addRolesDetails = (rolesDetails,newRole) => {
     return rolesDetails;
 };
 const editRolesDetails = (rolesDetails,id,newRole) => {
-
+    for(var i=0;i<rolesDetails.length;i++){
+        if(rolesDetails[i].roleID == parseInt(id)){
+            rolesDetails[i] = newRole;
+            return rolesDetails;
+        }
+    }
 };
 const deleteRolesDetails = (rolesDetails,id) => {
-
+    
+    for(var i=0;i<rolesDetails.length;i++){
+        if(rolesDetails[i].roleID == parseInt(id)){
+            rolesDetails.splice(i,1);
+            return rolesDetails;
+        }
+    }    
 };
 const RolesManagementReducer = (state=initialState, action) => {
     switch(action.type){
@@ -27,15 +38,15 @@ const RolesManagementReducer = (state=initialState, action) => {
                 {rolesDetails: addRolesDetails(state.rolesDetails.concat(),action.payload)}
             )
         case EDIT_ROLES_DETAILS:
-            return {
-                ...state,
-                rolesDetails:editRolesDetails(state.rolesDetails,action.roleID,action.payload),
-            }
+            return Object.assign({},
+                state,
+                {rolesDetails:editRolesDetails(state.rolesDetails,action.roleID,action.payload)},
+            )
         case DELETE_ROLES_DETAILS:
-            return {
-                ...state,
-                rolesDetails:deleteRolesDetails(state.rolesDetails,action.roleID),
-            }
+            return Object.assign({}
+                ,state,
+                {rolesDetails: deleteRolesDetails(state.rolesDetails.concat(),action.roleID)}
+            )
         default:
             return state;
     }
