@@ -1,0 +1,67 @@
+.addRoles div {
+    text-align: left;
+    margin: 10px;
+}
+.addRoles > div > p {
+    display: inline-block;
+    margin-top: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 0;
+    width: 20%;
+    vertical-align: top;
+}
+input, select {
+    display:inline-block;
+    width:70%;
+}
+
+#checkBox > div {
+    width:70%;
+    display: inline-block;
+}
+#checkBox div {
+    margin:0;
+}
+#checkBox div div p:first-child {
+    font-size: 13px;
+    display: inline-block;
+    width: 25%;
+}
+#checkBox div div p {
+    width: 15%;
+    font-size: 12px;
+    display: inline-block;
+}
+#checkBox input {
+    width:20%;
+}
+#buttonGroup input, button {
+    width:60px;
+    margin-left:20px;
+}
+#detailsTable {
+    text-align: left;
+    font-size: 12px;
+    border-collapse: collapse;
+    border: 1px solid;
+    width:100%;
+}
+#detailsTable tr {
+    border:1px solid;
+}
+#detailsTable thead tr th:first-child {
+    width:10%;
+}
+#detailsTable thead tr th:nth-child(2) {
+    width:15%;
+}
+#detailsTable thead tr th:nth-child(3) {
+    width:15%;
+}
+#detailsTable thead tr th:nth-child(4) {
+    width:40%;
+}
+#detailsTable tbody th button {
+    margin:0px;
+}

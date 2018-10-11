@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { addRolesDetails,editRolesDetails,deleteRolesDetails } from '../flow/actions';
 import AddRoles from '../components/AddRoles';
 import RolesDetails from '../components/RolesDetails';
-import EditPannel from '../components/EditPannel';
 import ClassNames from 'classnames';
-
+import './index.css';
 
 class RolesManagement extends Component {
     constructor(props) {
@@ -21,12 +20,9 @@ class RolesManagement extends Component {
             authority:[],
             department:'Warehouse',
             role:'',
+            newItem:true,
             rolesDetailsHead:['NO.','Department','Role','Permission','Action'],
-            editPannelHidden:true,
             editItemID:'',
-            editAuthority:[],
-            editDepartment:'',
-            editRole:'',
 
         };
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,9 +32,6 @@ class RolesManagement extends Component {
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         this.handleDetailsEdit = this.handleDetailsEdit.bind(this);
         this.handleDetailsDelete = this.handleDetailsDelete.bind(this);
-        this.handleEditSubmit = this.handleEditSubmit.bind(this);
-        this.handleEditCancel = this.handleEditCancel.bind(this);
-        this.handleEditInputChange = this.handleEditInputChange.bind(this);
        
 
     }
@@ -54,15 +47,25 @@ class RolesManagement extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const { dispatch } = this.props;
-        dispatch(addRolesDetails({ 
-            authority:this.state.authority.slice(0),
-            department:this.state.department,
-            role:this.state.role,
-        }));
+
+        if(this.state.newItem){
+            dispatch(addRolesDetails({ 
+                authority:this.state.authority.slice(0),
+                department:this.state.department,
+                role:this.state.role,
+            }));
+        }else{
+            dispatch(editRolesDetails(this.state.editItemID,{ 
+                authority:this.state.authority.slice(0),
+                department:this.state.department,
+                role:this.state.role,
+               }));
+        }
         this.setState({           
             authority:[],
             department:'Warehouse',
             role:'',
+            newItem:true,
         });
     }       
     
@@ -72,6 +75,7 @@ class RolesManagement extends Component {
             authority:[],
             department:'Warehouse',
             role:'',
+            newItem:true,
         });
     }
 
@@ -101,70 +105,18 @@ class RolesManagement extends Component {
         }
       
     }
-    handleEditInputChange = (e) => {        
-         const target = e.target;
-         const value = target.value;
-         const type = target.type;
- 
-         if(type==='checkbox'){
-             if(target.checked){
-                 this.setState(() => ({
-                     editAuthority:this.handleAddItem(this.state.editAuthority,value),
-                     }))
-             }else{
-                 this.setState(() => ({
-                    editAuthority:this.handleDeleteItem(this.state.editAuthority,value),
-                 }))
-             }
-         }else if(type==='text'){
-                 this.setState((prevState) => ({
-                     editRole:value,
-                 }))
-         }else{
-                 this.setState((prevState) => ({
-                     editDepartment:value,
-                 }))
-         }
-       
-    }
     
-    handleEditCancel = (e) => {
-        e.preventDefault();
-        this.setState({editPannelHidden:true,
-                        editItemID:'',
-                        editAuthority:[],
-                        editDepartment:'',
-                        editRole:'',
-        });        
-    }
-
-    handleEditSubmit = (e) =>{
-        e.preventDefault();
-        const { dispatch } = this.props;
-        dispatch(editRolesDetails(this.state.editItemID,{ 
-            authority:this.state.editAuthority.slice(0),
-            department:this.state.editDepartment,
-            role:this.state.editRole,
-        }));
-        this.setState({           
-            editPannelHidden:!this.state.editPannelHidden,
-            editItemID:'',
-            editAuthority:[],
-            editDepartment:'',
-            editRole:'',
-        });
-    }
-
     handleDetailsEdit = (e) => {
         e.preventDefault();
         var editItem={};
     
         editItem = getEditItem(this.props.rolesDetails.slice(0),e.target.name);
-        this.setState({editPannelHidden:!this.state.editPannelHidden,
+        this.setState({
                         editItemID:editItem.roleID,
-                        editAuthority:editItem.authority.slice(0),
-                        editDepartment:editItem.department,
-                        editRole:editItem.role,
+                        authority:editItem.authority.slice(0),
+                        department:editItem.department,
+                        role:editItem.role,
+                        newItem:false,
                     });
     }
 
@@ -172,6 +124,12 @@ class RolesManagement extends Component {
         e.preventDefault();
         const { dispatch } = this.props;
         dispatch(deleteRolesDetails(e.target.name));
+        this.setState({           
+            authority:[],
+            department:'Warehouse',
+            role:'',
+            newItem:true,
+        });
     }
 
 
@@ -184,19 +142,13 @@ class RolesManagement extends Component {
         const handleCancel = this.handleCancel;
         const handleDetailsEdit = this.handleDetailsEdit;
         const handleDetailsDelete = this.handleDetailsDelete;
-        const handleEditSubmit = this.handleEditSubmit;
-        const handleEditCancel = this.handleEditCancel;
-        const handleEditInputChange = this.handleEditInputChange;
-        
 
-        var editPannelClassName = ClassNames({
-            'editPannel': true,
-            'hidden': this.state.editPannelHidden,
-            });
         var addRolesClassName = ClassNames({
             'addRoles': true,
             });
-
+        var rolesDetailsClassName = ClassNames({
+            'rolesDetails':true,
+        });
 
         return (
             <div>
@@ -217,18 +169,7 @@ class RolesManagement extends Component {
                     rolesDetailsHead={rolesDetailsHead}
                     handleDetailsEdit={handleDetailsEdit}
                     handleDetailsDelete={handleDetailsDelete}
-                />
-                <AddRoles                  
-                    handleInputChange={handleEditInputChange}
-                    handleSubmit={handleEditSubmit}
-                    handleCancel={handleEditCancel}                   
-                    departments={departments}
-                    permissions={permissions}
-                    operations={operations}
-                    authority={editAuthority}
-                    department={editDepartment}
-                    role={editRole}
-                    className={editPannelClassName}
+                    className={rolesDetailsClassName}
                 />
             </div>
         );

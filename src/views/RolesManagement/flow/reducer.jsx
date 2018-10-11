@@ -17,6 +17,7 @@ const editRolesDetails = (rolesDetails,id,newRole) => {
     for(var i=0;i<rolesDetails.length;i++){
         if(rolesDetails[i].roleID == parseInt(id)){
             rolesDetails[i] = newRole;
+            rolesDetails[i]['roleID'] = id;
             return rolesDetails;
         }
     }
