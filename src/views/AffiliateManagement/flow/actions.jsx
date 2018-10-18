@@ -4,17 +4,16 @@ import {
     DELETE_AFFILIATE_DETAILS,
 } from './actionTypes';
 
-export const addAffiliateDetails = (obj) => {
+export const addAffiliateDetails = (arr) => {
     return {
         type:ADD_AFFILIATE_DETAILS,
-        payload:obj,
+        payload:arr,
     }
 };
-export const editAffiliateDetails = (id,obj) => {
+export const editAffiliateDetails = (arr) => {
     return {
         type:EDIT_AFFILIATE_DETAILS,
-        affiliateID:id,
-        payload:obj,
+        payload:arr,
     }
 };
 export const deleteAffiliateDetails = (id) => {

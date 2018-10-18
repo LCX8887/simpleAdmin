@@ -10,14 +10,14 @@ const RolesDetails = ({ rolesDetails,rolesDetailsHead,handleDetailsEdit,handleDe
                     </tr>
                 </thead>
                 <tbody>
-                    {rolesDetails.map((rolesDetail,index) => <tr key={index}><th>{index+1}</th>
-                                                <th>{rolesDetail.department}</th>
-                                                <th>{rolesDetail.role}</th>
-                                                <th>{rolesDetail.authority.map(item => <p>{item}</p>)}</th>
-                                                <th>
+                    {rolesDetails.map((rolesDetail,index) => <tr key={index}><td>{index+1}</td>
+                                                <td>{rolesDetail.department}</td>
+                                                <td>{rolesDetail.role}</td>
+                                                <td>{rolesDetail.authority.map(item => <p>{item}</p>)}</td>
+                                                <td>
                                                 <button name={rolesDetail.roleID} onClick={handleDetailsEdit}>Edit</button>
                                                 <button name={rolesDetail.roleID} onClick={handleDetailsDelete}>Delete</button>
-                                                </th>
+                                                </td>
                                             </tr>
                                                 
                     )}
