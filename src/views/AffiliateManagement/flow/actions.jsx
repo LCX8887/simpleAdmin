@@ -16,9 +16,3 @@ export const editAffiliateDetails = (arr) => {
         payload:arr,
     }
 };
-export const deleteAffiliateDetails = (id) => {
-    return {
-        type:DELETE_AFFILIATE_DETAILS,
-        affiliateID:id,
-    }
-};

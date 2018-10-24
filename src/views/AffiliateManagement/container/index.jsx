@@ -71,10 +71,18 @@ class AffiliateManagement extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const { dispatch } = this.props;
+        const affiliateColumn = this.state.affiliateColumn;
+        var isEmpty = true;
+        for(var i=0;i<affiliateColumn.length;i++){
+            if(affiliateColumn[i].itemValue !== ''){
+                isEmpty = false;
+            }
+        }
 
-        if(this.state.newItem){
+        if(this.state.newItem && !isEmpty){
+
             dispatch(addAffiliateDetails(
-                this.state.affiliateColumn
+                affiliateColumn
             ));
         }else{
             dispatch(editAffiliateDetails(this.state.affiliateDetailsCopy));
@@ -225,7 +233,11 @@ function getChangedAffiliateDetailsCopy(arr,i,value,editingColumn){
     }
 }
 function deleteAffiliateDetailsCopy(arr,deletingColumn){
-    arr.splice(deletingColumn-1,1);
+    for(var i=0;i<arr.length;i++){
+        if(arr[i].affiliateID === deletingColumn){
+            arr.splice(i,1);
+        }
+    }
     return arr;
 }
 const mapStateToProps = state => ({

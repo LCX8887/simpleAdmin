@@ -13,24 +13,7 @@ const addAffiliateDetails = (affiliateDetails,newAffiliate) => {
     affiliateDetails.push(newAffiliate);
     return affiliateDetails;
 };
-// const editAffiliateDetails = (affiliateDetails,id,newAffiliate) => {
-//     for(var i=0;i<affiliateDetails.length;i++){
-//         if(affiliateDetails[i].affiliateID == parseInt(id)){
-//             affiliateDetails[i] = newAffiliate;
-//             affiliateDetails[i]['affiliateID'] = id;
-//             return affiliateDetails;
-//         }
-//     }
-// };
-// const deleteAffiliateDetails = (affiliateDetails,id) => {
-    
-//     for(var i=0;i<affiliateDetails.length;i++){
-//         if(affiliateDetails[i].affiliateID == parseInt(id)){
-//             affiliateDetails.splice(i,1);
-//             return affiliateDetails;
-//         }
-//     }    
-// };
+
 const AffiliateManagementReducer = (state=initialState, action) => {
     switch(action.type){
         case ADD_AFFILIATE_DETAILS:
@@ -42,11 +25,6 @@ const AffiliateManagementReducer = (state=initialState, action) => {
             return Object.assign({},                
                 {affiliateDetails:action.payload})
             
-        // case DELETE_AFFILIATE_DETAILS:
-        //     return Object.assign({}
-        //         ,state,
-        //         {affiliateDetails: deleteAffiliateDetails(state.affiliateDetails.concat(),action.affiliateID)}
-        //     )
         default:
             return state;
     }
